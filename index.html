@@ -1,132 +1,759 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Sawarabi+Mincho&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>京都市左京区花背：キッチンカー出店者募集</title>
   <meta name="description" content="京都市・花背であなたのキッチンカーを出店しませんか？自然あふれるロケーションと観光導線の立地で新たな顧客と出会える場所をご提供します。">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="./logo.jpg" type="image/jpeg">
+
+  <!-- OGP Tags -->
   <meta property="og:title" content="花背：出店者募集">
   <meta property="og:description" content="自然豊かな花背でキッチンカーを出店しませんか？">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="img_hanase_1.jpg">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="logo.png" type="image/png">
+  <meta property="og:image" content="./img_hanase_1.jpg">
+  <meta property="og:url" content=""> <!-- TODO: Add actual URL -->
+
+  <style>
+    /* === CSS RESET & BASIC SETUP === */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-family-base: 'Sawarabi Mincho', serif;
+      --text-color: #3a2417;
+      --text-color-light: #5e4a3e;
+      --background-color: #fdfaf6;
+      --accent-color: #c9a063;
+      --accent-color-dark: #b8915a;
+      --white: #ffffff;
+      --border-color: #e8e0d4;
+      --header-height: 80px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--header-height);
+    }
+
+    body {
+      font-family: var(--font-family-base);
+      color: var(--text-color);
+      background-color: var(--background-color);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    a:hover {
+      opacity: 0.8;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-container {
+      display: grid;
+      gap: 40px;
+    }
+
+    .section-container-narrow {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--text-color);
+      position: relative;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .section-title span {
+        background: linear-gradient(transparent 70%, rgba(201, 160, 99, 0.3) 70%);
+    }
+
+    .section-subtitle {
+      font-size: 0.875rem;
+      color: var(--accent-color);
+      letter-spacing: 0.2em;
+    }
+
+    /* === BUTTONS === */
+    .cta-button {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: bold;
+      text-align: center;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      border: none;
+      cursor: pointer;
+      min-width: 220px;
+    }
+
+    .cta-button:hover {
+      background-color: var(--accent-color-dark);
+      transform: translateY(-2px);
+      opacity: 1;
+    }
+
+
+    /* === HEADER === */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .header.scrolled {
+      background-color: rgba(253, 250, 246, 0.9);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo img {
+      height: 50px;
+      width: auto;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .header-nav a {
+      color: var(--text-color);
+      font-weight: 600;
+      position: relative;
+    }
+
+    .header-nav a:not(.cta-button)::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--accent-color);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .header-nav a:not(.cta-button):hover::after {
+      transform: scaleX(1);
+    }
+
+    .header-cta {
+        min-width: auto;
+        padding: 10px 24px;
+    }
+
+    .hamburger-menu {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    /* === HERO === */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .hero-background::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(40, 25, 15, 0.5);
+    }
+
+    .hero-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+    }
+
+    .hero-content {
+      animation: fadeIn 1.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: normal;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title span {
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .hero-cta {
+        padding: 18px 40px;
+    }
+
+    /* === CONCEPT === */
+    .concept-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .concept-text p {
+        margin-bottom: 1.5em;
+    }
+
+    .concept-image img {
+        box-shadow: 10px 10px 0 var(--border-color);
+    }
+
+    /* === FEATURES === */
+    .features {
+        background-color: var(--white);
+    }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+
+    .feature-card {
+        background-color: var(--background-color);
+        padding: 40px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        text-align: center;
+    }
+
+    .feature-number {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-color);
+    }
+
+    .feature-text {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--text-color-light);
+    }
+
+    /* === VOICE === */
+    .voice-box {
+      background-color: var(--white);
+      padding: 40px;
+      border-left: 5px solid var(--accent-color);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .voice-text {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .voice-footer {
+      text-align: right;
+      color: var(--text-color-light);
+    }
+
+    /* === FLOW === */
+    .flow {
+        background-color: var(--white);
+    }
+    .flow-steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        position: relative;
+    }
+
+    .flow-step {
+        flex: 1;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .flow-step-number {
+        color: var(--accent-color);
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .flow-step-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .flow-arrow {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a063'%3E%3Cpath d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: 50px;
+    }
+    .flow-arrow:last-child {
+        display: none;
+    }
+
+
+    /* === FORM, CALENDAR === */
+    .form-note, .calendar-note, .form-link {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: var(--text-color-light);
+    }
+
+    .form-embed iframe, .calendar-embed iframe {
+        width: 100%;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+    }
+    .form-embed iframe { min-height: 1200px; }
+    .calendar-embed iframe { height: 600px; }
+
+    /* === ACCESS === */
+    .access-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .access-map iframe {
+        width: 100%;
+        height: 450px;
+        border: 0;
+        border-radius: 8px;
+    }
+
+    .access-location-name {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .access-info p {
+        margin-bottom: 1.5rem;
+    }
+
+    .map-button {
+        margin-bottom: 1.5rem;
+    }
+
+    .access-note {
+        font-size: 0.9rem;
+        color: var(--text-color-light);
+    }
+
+    .access-image {
+        margin-top: 2rem;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      background-color: var(--text-color);
+      color: var(--white);
+      padding: 40px 0;
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+        color: var(--white);
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-info p {
+        margin: 0;
+        padding: 5px 0;
+    }
+
+    .footer-copyright {
+        text-align: right;
+    }
+
+
+    /* === STICKY CTA (MOBILE) === */
+    .sticky-cta {
+      display: none; /* Hidden on desktop */
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--white);
+      padding: 10px;
+      text-align: center;
+      z-index: 999;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+
+    .sticky-cta .cta-button {
+        width: 100%;
+    }
+
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 1024px) {
+        .flow-steps {
+            flex-direction: column;
+            align-items: center;
+        }
+        .flow-arrow {
+            transform: rotate(90deg);
+            margin: 20px 0;
+        }
+    }
+
+
+    @media (max-width: 768px) {
+      :root {
+        --header-height: 70px;
+      }
+      
+      .section {
+          padding: 60px 0;
+      }
+
+      .header-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--background-color);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in-out;
+      }
+
+      body.menu-open .header-nav {
+        transform: translateX(0);
+      }
+
+      .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 30px;
+        height: 25px;
+      }
+      .hamburger-menu span {
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-color);
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+      }
+      
+      body.menu-open .hamburger-menu span:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
+      }
+      body.menu-open .hamburger-menu span:nth-child(2) {
+          opacity: 0;
+      }
+      body.menu-open .hamburger-menu span:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
+      }
+
+      .sticky-cta {
+        display: block;
+      }
+      body {
+        padding-bottom: 70px; /* Space for sticky CTA */
+      }
+
+      .concept-body, .access-body {
+          grid-template-columns: 1fr;
+      }
+      
+      .concept-image {
+          order: -1; /* Move image to top on mobile */
+      }
+      
+      .features-grid {
+          grid-template-columns: 1fr;
+      }
+      
+      .access-map {
+          height: 300px;
+      }
+      
+      .footer-container {
+          flex-direction: column;
+          text-align: center;
+      }
+      .footer-copyright {
+          text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header class="hero" id="top">
-  <div class="container"><div class="hero-head">
-      <div class="hero-left">
-        <img src="logo.png" alt="花背キッチントラックのロゴ" class="site-logo" loading="eager">
-      </div>
-      <div class="hero-center">
-        <h1>花背であなたのキッチンカーを出店しませんか？</h1>
-        <p class="subcopy">自然と四季の魅力溢れる場所で、あなたの料理を届けませんか？</p>
-      </div>
-      <div class="hero-right">
-        <a href="#form" class="cta-button">今すぐ出店応募</a>
-      </div>
-    </div></div>
-</header>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="#top" class="header-logo">
+        <img src="./logo.jpg" alt="花背キッチントラック ロゴ">
+      </a>
+      <nav class="header-nav">
+        <a href="#concept">花背の魅力</a>
+        <a href="#features">出店のメリット</a>
+        <a href="#flow">出店までの流れ</a>
+        <a href="#access">アクセス</a>
+        <a href="#form" class="cta-button header-cta">出店応募する</a>
+      </nav>
+      <button class="hamburger-menu" aria-label="メニューを開く" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
 
   <main>
-
-<section class="section" id="intro">
-  <div class="container">
-    <h2>はじめに</h2>
-    <p>
-      京都市左京区の北部、車で街中から1時間ほど走ったところに花背（はなせ）という場所があります。標高500メートルほどの山間部で、昔から林業で栄えてきた静かな山里です。今でも当時の雰囲気がそのまま残っていて、歩いているとどこか懐かしい気持ちになります。
-    </p>
-    <p>
-      都市部の慌ただしさとは無縁のこの土地ですが、意外にも多くの人が通り抜けていく道でもあるんです。特にバイクや自転車が好きな方々には、花背峠が滋賀や京北方面へ抜ける絶好のコースとして愛されています。土日になると、山道にバイクのエンジン音が響いたり、ロードバイクが風を切って駆け抜けていく様子を目にすることも珍しくありません。
-    </p>
-    <p>
-      花背は決して単なる田舎の通り道というわけではないと思います。人が行き交う交通の要所でありながら、季節ごとに表情を変える豊かな自然と、そこで暮らす人々の日常が織りなす風景は、訪れる人の気持ちをほっと和ませてくれる、そんな特別な場所なのです。
-    </p>
-  </div>
-</section>
-
-
-<section class="section" id="slideshow">
-  <div class="container">
-    <h2>花背の風景ギャラリー</h2>
-    <div class="slider" aria-live="polite">
-      <div class="slide"><img src="img_hanase_1.jpg" alt="花背の風景1" loading="lazy"></div>
-      <div class="slide"><img src="img_hanase_2.jpg" alt="花背の風景2" loading="lazy"></div>
-      <div class="slide"><img src="img_hanase_3.jpg" alt="花背の風景3" loading="lazy"></div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section" id="features">
-  <div class="container">
-    <h2>花背の魅力</h2>
-    <p>
-      花背を訪れて一番印象に残るのは、やはり深い静寂と、手を伸ばせば届きそうなほど身近に感じる自然の存在です。春になると山桜がそっと里を彩り始め、夏は川音と蝉の合唱に包まれます。秋には山全体が真っ赤に燃え上がるような紅葉に染まり、冬の雪化粧した景色はまるで違う世界に迷い込んだかのような美しさです。
-    </p>
-    <p>
-      この土地で暮らしている方々は、昔から受け継がれてきた丁寧な暮らし方を今も大切にされていて、よそから来た人にも自然に声をかけてくださいます。道路脇にひっそりと置かれた無人の野菜販売所や、手入れが行き届いた畑や庭先の花々を見ていると、日々の生活の中にある美しさというものを改めて感じさせられます。
-    </p>
-    <p>
-      花背の良いところは、観光地らしい派手さがないことかもしれません。時間がゆっくりと流れる中で、気取らずに自分らしくいられる場所。だからこそ一度訪れた人が「また来たい」と思ってくださるのでしょう。
-    </p>
-    <p>
-      もしキッチンカーでの出店をお考えでしたら、この静かな環境は大きな魅力になると思います。バイクや自転車で山道を楽しんだ方々が一息つく場所として、都会の雑踏を離れた自然の中で、心を込めた料理を味わっていただく。そんな特別な体験を提供できる場所ではないでしょうか。
-    </p>
-  </div>
-</section>
-
-
-    <section class="section" id="opportunity">
-      <div class="container">
-        <h2>キッチンカー出店は、こんな方にぴったり！</h2>
-        <ul>
-          <li>週末や祝日だけ営業したい方</li>
-          <li>自然と住環境が密接な環境の中で自分の料理を提供されたい方</li>
-          <li>地元の方をはじめ、人とのつながりを大切にされたい方</li>
-        </ul>
-        <p>花背では、あなたの「やってみたい」を全力で応援します。</p>
+    <!-- Hero Section -->
+    <section class="hero" id="top">
+      <div class="hero-background">
+        <img src="./img_hanase_1.jpg" alt="花背の美しい風景1" class="hero-slide active" loading="eager">
+        <img src="./img_hanase_2.jpg" alt="花背の美しい風景2" class="hero-slide" loading="lazy">
+        <img src="./img_hanase_3.jpg" alt="花背の美しい風景3" class="hero-slide" loading="lazy">
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span>街の喧騒から、</span>
+          <span>森のキッチンへ。</span>
+        </h1>
+        <p class="hero-subtitle">自然豊かな京都・花背で、あなたの料理を届けませんか？</p>
+        <a href="#form" class="cta-button hero-cta">今すぐ出店応募する</a>
       </div>
     </section>
 
-    <section class="section" id="voice">
-      <div class="container">
-        <h2>出店者の声</h2>
-        <blockquote>
-          現在募集中
-          <footer>
-            <p>お問い合わせ：<a href="mailto:sakyo.hokubu2025@gmail.com">sakyo.hokubu2025@gmail.com</a></p>
-          </footer>
-        </blockquote>
+    <!-- Concept Section -->
+    <section class="section concept" id="concept">
+      <div class="container section-container">
+        <div class="section-header">
+          <h2 class="section-title"><span>はじめに</span></h2>
+          <p class="section-subtitle">CONCEPT</p>
+        </div>
+        <div class="concept-body">
+          <div class="concept-text">
+            <p>京都市内から車で約1時間。<br>豊かな緑と清らかな空気に包まれた、静かな山里「花背」。</p>
+            <p>ここは、四季折々の美しい表情を見せる自然と、昔ながらの丁寧な暮らしが息づく場所です。</p>
+            <p>ツーリングやサイクリングで多くの人が行き交うこの地で、訪れる人々の心に残る一皿を提供しませんか？</p>
+            <p>花背は、あなたの「やってみたい」を応援します。</p>
+          </div>
+          <div class="concept-image">
+            <img src="./img_hanase_2.jpg" alt="春の桜が咲き誇る花背の風景" loading="lazy">
+          </div>
+        </div>
       </div>
     </section>
-
     
+    <!-- Features Section -->
+    <section class="section features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title"><span>3つの出店メリット</span></h2>
+                <p class="section-subtitle">MERIT</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-number">01</div>
+                    <h3 class="feature-title">絶好のロケーション</h3>
+                    <p class="feature-text">ツーリングやサイクリング客が多く、週末には賑わいを見せます。自然の中で味わう特別な一皿は、きっと忘れられない体験になります。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">02</div>
+                    <h3 class="feature-title">柔軟な出店形態</h3>
+                    <p class="feature-text">「週末だけ営業したい」「特定のイベントに合わせて出店したい」など、あなたのライフスタイルに合わせた柔軟な出店が可能です。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">03</div>
+                    <h3 class="feature-title">地域とのつながり</h3>
+                    <p class="feature-text">地元の方々との温かい交流も花背の魅力の一つ。あなたの料理が、人と人、地域とあなたを繋ぐきっかけになります。</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="section" id="flow">
-  <div class="container">
-    <h2>出店までの流れ</h2>
-    <div class="flow-steps" aria-label="出店までの流れ">
-      <p>フォームから応募</p>
-      <span class="arrow" aria-hidden="true">↓</span>
-      <p>内容確認＆返信</p>
-      <span class="arrow" aria-hidden="true">↓</span>
-      <p>出店決定とご案内</p>
-      <span class="arrow" aria-hidden="true">↓</span>
-      <p>当日現地で出店</p>
-    </div>
-  </div>
-</section>
+    <!-- Voice Section -->
+    <section class="section voice" id="voice">
+      <div class="container section-container-narrow">
+        <div class="section-header">
+            <h2 class="section-title"><span>出店者の声</span></h2>
+            <p class="section-subtitle">VOICE</p>
+        </div>
+        <div class="voice-box">
+          <p class="voice-text">現在、出店者を温かくお迎えする準備を進めております。第一号の出店者として、花背の魅力を一緒に発信しませんか？ご応募を心よりお待ちしております。</p>
+          <footer class="voice-footer">
+            <p>花背キッチンカー出店プロジェクト 担当者</p>
+          </footer>
+        </div>
+      </div>
+    </section>
 
-
-</section>
-
-    <section class="section" id="form">
+    <!-- Flow Section -->
+    <section class="section flow" id="flow">
       <div class="container">
-        <h2>応募フォーム</h2>
-        <p class="form-note">ご応募前に、火気使用禁止・音量配慮・ゴミの持ち帰り等をご確認ください。<br>
-          個人情報は出店連絡目的以外には使用いたしません。</p>
+        <div class="section-header">
+          <h2 class="section-title"><span>出店までの流れ</span></h2>
+          <p class="section-subtitle">FLOW</p>
+        </div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-step-number">STEP 01</div>
+            <h3 class="flow-step-title">フォームから応募</h3>
+            <p class="flow-step-text">まずは応募フォームから、必要事項をご記入の上、お気軽にご応募ください。</p>
+          </div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step">
+            <div class="flow-step-number">STEP 02</div>
+            <h3 class="flow-step-title">内容確認・ご連絡</h3>
+            <p class="flow-step-text">担当者が内容を確認し、3営業日以内にメールにてご連絡いたします。</p>
+          </div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step">
+            <div class="flow-step-number">STEP 03</div>
+            <h3 class="flow-step-title">出店決定・ご案内</h3>
+            <p class="flow-step-text">日程などを調整し、出店が決定しましたら、詳細をご案内します。</p>
+          </div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step">
+            <div class="flow-step-number">STEP 04</div>
+            <h3 class="flow-step-title">出店当日</h3>
+            <p class="flow-step-text">現地にて準備を進め、お客様をお迎えください！</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="section form" id="form">
+      <div class="container section-container-narrow">
+        <div class="section-header">
+          <h2 class="section-title"><span>応募フォーム</span></h2>
+          <p class="section-subtitle">ENTRY FORM</p>
+        </div>
+        <p class="form-note">
+          ご応募前に、火気使用禁止・音量配慮・ゴミの持ち帰り等のルールをご確認ください。<br>
+          ご入力いただいた個人情報は、出店に関するご連絡の目的以外には使用いたしません。
+        </p>
         <div class="form-embed">
           <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd31PAc7GQtQ4Z3EYAOICj5rWRwGQrUy5kihNTTzMINpAKDgA/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
         </div>
@@ -136,82 +763,121 @@
       </div>
     </section>
 
-<section class="section" id="calendar">
-  <div class="container">
-    <h2>出店可能日カレンダー</h2>
-    <p>以下のカレンダーから、出店可能日をご確認いただけます。</p>
-    <div class="calendar-embed">
-      <iframe src="https://calendar.google.com/calendar/embed?src=sakyo.hokubu2025%40gmail.com&ctz=Asia%2FTokyo" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
-    </div>
-  </div>
-</section>
+    <!-- Calendar Section -->
+    <section class="section calendar" id="calendar">
+      <div class="container section-container-narrow">
+        <div class="section-header">
+          <h2 class="section-title"><span>出店可能日</span></h2>
+          <p class="section-subtitle">CALENDAR</p>
+        </div>
+        <p class="calendar-note">以下のカレンダーから、出店可能日をご確認いただけます。</p>
+        <div class="calendar-embed">
+          <iframe src="https://calendar.google.com/calendar/embed?src=sakyo.hokubu2025%40gmail.com&ctz=Asia%2FTokyo" frameborder="0" scrolling="no"></iframe>
+        </div>
+      </div>
+    </section>
 
-<section class="section" id="access">
-  <div class="container">
-    <h2>アクセス・エリアマップ</h2>
-    <p>
-      旧JA跡地：京都市左京区花脊大布施町183<br>
-      <a href="https://maps.app.goo.gl/Sp8vGbd7421mVGYB6" target="_blank" rel="noopener">Googleマップで見る</a><br>
-      京都市内（中京区）から約1時間の距離です。
-    </p>
-    <div class="map-embed">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d214.38939674361953!2d135.77589158146066!3d35.20889738529859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sja!2sjp!4v1755431093624!5m2!1sja!2sjp"
-        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-    <div class="closing-cta">
-      <h2>街の喧騒から離れた花背で、心を込めたあなたの一皿を提供してみませんか？</h2>
-      <a href="#form" class="cta-button">出店応募フォームへ進む</a>
-    </div>
-  </div>
-</section>
-
+    <!-- Access Section -->
+    <section class="section access" id="access">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title"><span>アクセス</span></h2>
+          <p class="section-subtitle">ACCESS</p>
+        </div>
+        <div class="access-body">
+          <div class="access-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1581.9000964058025!2d135.77578243165078!3d35.208747978765736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDEyJzMxLjciTiAxMzXCsDQ2JzMzLjAiRQ!5e1!3m2!1sja!2sjp!4v1756348093261!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="access-info">
+            <h3 class="access-location-name">出店場所：旧JA京都花背支店跡地</h3>
+            <p>〒601-1102 京都府京都市左京区花脊大布施町183</p>
+            <a href="https://maps.app.goo.gl/Sp8vGbd7421mVGYB6" class="cta-button map-button" target="_blank" rel="noopener">Googleマップで開く</a>
+            <p class="access-note">※京都市中心部から車で約1時間<br>※駐車スペース有り</p>
+            <div class="access-image">
+                <img src="./img_ja_former.jpg" alt="出店場所となる旧JA跡地の建物" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p>お問い合わせ：<a href="mailto:sakyo.hokubu2025@gmail.com">sakyo.hokubu2025@gmail.com</a></p>
-    <p>&copy; 2025 花背キッチンカー出店プロジェクト</p>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-info">
+        <p class="footer-project-name">花背キッチンカー出店プロジェクト</p>
+        <p>お問い合わせ：<a href="mailto:sakyo.hokubu2025@gmail.com">sakyo.hokubu2025@gmail.com</a></p>
+      </div>
+      <p class="footer-copyright">&copy; 2025 Hanase Kitchen Truck Project.</p>
+    </div>
   </footer>
 
-  <div class="sticky-cta" role="region" aria-label="固定応募ボタン">
-    <a href="#form">出店応募する</a>
+  <!-- Sticky CTA for Mobile -->
+  <div class="sticky-cta">
+    <a href="#form" class="cta-button">出店応募はこちら</a>
   </div>
 
+  <!-- JavaScript -->
   <script>
-    // アンカーのスムーススクロール
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (!href || href === '#') return;
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth Scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#' || href === '') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            // Adjust for header height
+            const headerOffset = document.querySelector('.header').offsetHeight;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+            // Close mobile menu on click
+            if (document.body.classList.contains('menu-open')) {
+              document.body.classList.remove('menu-open');
+              document.querySelector('.hamburger-menu').setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      });
+
+      // Hamburger Menu
+      const hamburger = document.querySelector('.hamburger-menu');
+      const body = document.body;
+      hamburger.addEventListener('click', () => {
+        body.classList.toggle('menu-open');
+        const isExpanded = body.classList.contains('menu-open');
+        hamburger.setAttribute('aria-expanded', isExpanded);
+      });
+      
+      // Header scroll effect
+      const header = document.querySelector('.header');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
         }
       });
+
+      // Hero Slideshow
+      const heroSlides = document.querySelectorAll('.hero-slide');
+      if (heroSlides.length > 1) {
+        let currentSlide = 0;
+        setInterval(() => {
+          heroSlides[currentSlide].classList.remove('active');
+          currentSlide = (currentSlide + 1) % heroSlides.length;
+          heroSlides[currentSlide].classList.add('active');
+        }, 5000); // 5秒ごとに画像を切り替え
+      }
     });
   </script>
-
-<script>
-  // スライドショー（6秒ごと切替、ズームあり）
-  let slides;
-  let current = 0;
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === index);
-    });
-  }
-  function startSlideshow() {
-    slides = document.querySelectorAll('.slide');
-    if (!slides.length) return;
-    showSlide(current);
-    setInterval(() => {
-      current = (current + 1) % slides.length;
-      showSlide(current);
-    }, 6000);
-  }
-  window.addEventListener('DOMContentLoaded', startSlideshow);
-</script>
 
 </body>
 </html>
